@@ -31,8 +31,7 @@
      */
     var setSong = function(song) {
       if (currentBuzzObject) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null;
+        stopSong(SongPlayer.currentSong);
       }
 
       currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -47,6 +46,7 @@
      * @function playSong
      * @desc Plays the current Buzz object and sets the playing property of the song
      * object to true
+     * @param {Object} song
     */
     var playSong = function(song) {
       currentBuzzObject.play();
@@ -54,9 +54,21 @@
     };
 
     /*
+     * @function stopSong
+     * @desc Stops the currentBuzzObject and sets the playing property of the song
+     * object to null
+     * @param {Object} song
+    */
+    var stopSong = function(song) {
+      currentBuzzObject.stop();
+      song.playing = null;
+    };
+
+    /*
      * @function getSongIndex
      * @desc Returns the index of the song from the currentAlbum
      * @return {Number}
+     * @param {Object} song
     */
     var getSongIndex = function(song) {
       return currentAlbum.songs.indexOf(song);
@@ -66,7 +78,7 @@
     * @desc song object from Fixtures.js
     * @type {Object}
     */
-    SongPlayer.currentSong = null;
+      SongPlayer.currentSong = null;
 
     /*
      * @function SongPlayer.play
@@ -110,8 +122,25 @@
       currentSongIndex--;
 
       if (currentSongIndex < 0) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null;
+        stopSong(SongPlayer.currentSong);
+      } else {
+        var song = currentAlbum.songs[currentSongIndex];
+        setSong(song);
+        playSong(song);
+      }
+    };
+
+    /*
+     * @function SongPlayer.next
+     * @desc Plays the song following the currentSong, or stops the currentSong
+     * if there is no following song
+     */
+    SongPlayer.next = function() {
+      var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+      currentSongIndex++;
+
+      if (currentSongIndex >= currentAlbum.songs.length) {
+        stopSong(SongPlayer.currentSong);
       } else {
         var song = currentAlbum.songs[currentSongIndex];
         setSong(song);
