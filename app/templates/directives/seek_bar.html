@@ -1,0 +1,12 @@
+<!--
+  bloc-jams-angular
+    app
+      templates
+        directives
+          seek_bar.html
+-->
+
+<div class="seek-bar" ng-click="onClickSeekBar($event)">
+  <div class="fill" ng-style="fillStyle()"></div>
+  <div class="thumb" ng-mousedown="trackThumb()"></div>
+</div>
