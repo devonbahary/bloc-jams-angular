@@ -93,6 +93,12 @@
     SongPlayer.currentTime = null;
 
     /*
+     * @desc Current volume of currently playing song
+     * @type {Number}
+    */
+    SongPlayer.volume = null;
+
+    /*
      * @function play
      * @desc Plays a new song if song parameter is different from currentSong or
      * plays paused song if currentSong is the same as song parameter and the
@@ -168,6 +174,17 @@
     SongPlayer.setCurrentTime = function(time) {
       if (currentBuzzObject) {
         currentBuzzObject.setTime(time);
+      }
+    };
+
+    /*
+     * @func setVolume
+     * @desc Set volume of currently playing song
+     * @param {Number} volume
+    */
+    SongPlayer.setVolume = function(vol) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(vol);
       }
     };
 
